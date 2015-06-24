@@ -2,6 +2,10 @@
   "push": {
     "name": "analogeryuta/debian-8-i386-minimal"
   },
+  "variables": {
+    "atlas_username": "{{env `ATLAS_USERNAME`}}",
+    "atlas_name": "{{env `ATLAS_NAME`}}"
+  },
   "builders": [
     {
       "boot_command": [
@@ -32,7 +36,7 @@
       "shutdown_command": "echo 'vagrant'| sudo -S /sbin/shutdown -hP now",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
-      "ssh_wait_timeout": "1200s",
+      "ssh_wait_timeout": "3000s",
       "type": "virtualbox-iso",
       "vboxmanage": [
         [
@@ -61,6 +65,20 @@
     {
       "output": "debian-8-i386-minimal.box",
       "type": "vagrant"
+    },
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false
+    },
+    {
+      "type": "atlas",
+      "only": ["virtualbox-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+       "provider": "virtualbox",
+       "version": "0.0.1"
+      }
     }
   ],
   "provisioners": [
