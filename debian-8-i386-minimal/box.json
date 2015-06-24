@@ -59,11 +59,8 @@
   ],
   "post-processors": [
     {
-      "output": "debian-8-i386-minimal.box",
-      "type": "vagrant"
-    },
-    {
       "type": "vagrant",
+      "output": "debian-8-i386-minimal.box",
       "keep_input_artifact": false
     },
     {
