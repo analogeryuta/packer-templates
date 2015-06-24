@@ -1,0 +1,79 @@
+{
+  "push": {
+    "name": "analogeryuta/debian-8-x86_64-minimal"
+  },
+  "builders": [
+    {
+      "boot_command": [
+        "<esc><wait>",
+        "install noapic ",
+        "preseed/url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg ",
+        "debian-installer=en_US ",
+        "auto=true ",
+        "locale=en_US ",
+        "kbd-chooser/method=us ",
+        "netcfg/get_hostname={{ .Name }} ",
+        "netcfg/get_domain={{ .Name }}.localdomain ",
+        "fb=false",
+        "debconf/frontend=noninteractive ",
+        "console-setup/ask_detect=false ",
+        "console-keymaps-at/keymap=us ",
+        "keyboard-configuration/xkb-keymap=us <wait>",
+        "<enter><wait>"
+      ],
+      "boot_wait": "10s",
+      "disk_size": "10000",
+      "guest_os_type": "Debian",
+      "headless": false,
+      "http_directory": "./",
+      "iso_checksum": "7844a8e84afe7a168a8f893b298d0dd06d869deffc73fef27791a252688a9d2affc6e4f46b2c5db4794054cec84365f2107c012f1025eb85826bb340134932ec",
+      "iso_checksum_type": "sha512",
+      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/debian-cd/current/amd64/iso-cd/debian-8.1.0-amd64-netinst.iso",
+      "shutdown_command": "echo 'vagrant'| sudo -S /sbin/shutdown -hP now",
+      "ssh_password": "vagrant",
+      "ssh_username": "vagrant",
+      "ssh_wait_timeout": "1200s",
+      "type": "virtualbox-iso",
+      "vboxmanage": [
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--pae",
+          "on"
+        ],
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--memory",
+          "512"
+        ],
+        [
+          "modifyvm",
+          "{{ .Name }}",
+          "--cpus",
+          "2"
+        ]
+      ],
+      "vm_name": "box"
+    }
+  ],
+  "post-processors": [
+    {
+      "output": "debian-8-x86_64-minimal.box",
+      "type": "vagrant"
+    }
+  ],
+  "provisioners": [
+    {
+      "execute_command": "echo 'vagrant'| sudo -S sh '{{ .Path }}'",
+      "scripts": [
+        "./postinstall/base.sh",
+        "./postinstall/puppet.sh",
+        "./postinstall/vagrant.sh",
+        "./postinstall/virtualbox.sh"
+      ],
+      "type": "shell"
+    }
+  ]
+}
+
