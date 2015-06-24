@@ -2,6 +2,10 @@
   "push": {
     "name": "analogeryuta/ubuntu-1404-server-i386"
   },
+  "variables": {
+    "atlas_username": "{{env `ATLAS_USERNAME`}}",
+    "atlas_name": "{{env `ATLAS_NAME`}}"
+  },
   "builders": [
     {
       "boot_command": [
@@ -19,9 +23,9 @@
       "guest_os_type": "Ubuntu",
       "headless": true,
       "http_directory": "./",
-      "iso_checksum": "08d25bf879e353686a974b7b14ae7d81",
+      "iso_checksum": "6478187442f331631b65f886cdd229ce",
       "iso_checksum_type": "md5",
-      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases/14.04/ubuntu-14.04-server-i386.iso",
+      "iso_url": "http://ftp.jaist.ac.jp/pub/Linux/ubuntu-releases/14.04/ubuntu-14.04.2-server-i386.iso",
       "shutdown_command": "sudo shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
@@ -42,6 +46,20 @@
     {
       "output": "ubuntu-1404-server-i386.box",
       "type": "vagrant"
+    },
+    {
+      "type": "vagrant",
+      "keep_input_artifact": false
+    },
+    {
+      "type": "atlas",
+      "only": ["virtualbox-iso"],
+      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact_type": "vagrant.box",
+      "metadata": {
+       "provider": "virtualbox",
+       "version": "0.0.1"
+      }
     }
   ],
   "provisioners": [
