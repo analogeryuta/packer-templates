@@ -2,12 +2,9 @@
   "push": {
     "name": "analogeryuta/ubuntu-1404-server-i386"
   },
-  "variables": {
-    "atlas_username": "{{env `ATLAS_USERNAME`}}",
-    "atlas_name": "{{env `ATLAS_NAME`}}"
-  },
   "builders": [
     {
+      "type": "virtualbox-iso",
       "boot_command": [
         "<esc><esc><enter><wait>",
         "/install/vmlinuz noapic ",
@@ -29,8 +26,8 @@
       "shutdown_command": "sudo shutdown -P now",
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
+      "ssh_port": 22,
       "ssh_wait_timeout": "3000s",
-      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
@@ -54,7 +51,7 @@
     {
       "type": "atlas",
       "only": ["virtualbox-iso"],
-      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact": "analogeryuta/ubuntu-1404-server-i386",
       "artifact_type": "vagrant.box",
       "metadata": {
        "provider": "virtualbox",

@@ -2,12 +2,9 @@
   "push": {
     "name": "analogeryuta/debian-8-i386-minimal"
   },
-  "variables": {
-    "atlas_username": "{{env `ATLAS_USERNAME`}}",
-    "atlas_name": "{{env `ATLAS_NAME`}}"
-  },
   "builders": [
     {
+      "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
         "install noapic ",
@@ -37,7 +34,6 @@
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "3000s",
-      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
@@ -73,7 +69,7 @@
     {
       "type": "atlas",
       "only": ["virtualbox-iso"],
-      "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+      "artifact": "analogeryuta/debian-8-i386-minimal",
       "artifact_type": "vagrant.box",
       "metadata": {
        "provider": "virtualbox",
