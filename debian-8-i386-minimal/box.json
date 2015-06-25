@@ -1,10 +1,6 @@
 {
-  "push": {
-    "name": "analogeryuta/debian-8-i386-minimal"
-  },
   "builders": [
     {
-      "type": "virtualbox-iso",
       "boot_command": [
         "<esc><wait>",
         "install noapic ",
@@ -23,8 +19,8 @@
         "<enter><wait>"
       ],
       "boot_wait": "10s",
+      "disk_size": "10000",
       "guest_os_type": "Debian",
-      "disk_size":"10000",
       "headless": false,
       "http_directory": "./",
       "iso_checksum": "caf870a76faa088abeed3fd72ac3e009c27452cf30261d0e461282bf3b0ee874",
@@ -34,6 +30,7 @@
       "ssh_password": "vagrant",
       "ssh_username": "vagrant",
       "ssh_wait_timeout": "3000s",
+      "type": "virtualbox-iso",
       "vboxmanage": [
         [
           "modifyvm",
@@ -59,19 +56,21 @@
   ],
   "post-processors": [
     {
-      "type": "vagrant",
+      "keep_input_artifact": false,
       "output": "debian-8-i386-minimal.box",
-      "keep_input_artifact": false
+      "type": "vagrant"
     },
     {
-      "type": "atlas",
-      "only": ["virtualbox-iso"],
       "artifact": "analogeryuta/debian-8-i386-minimal",
       "artifact_type": "vagrant.box",
       "metadata": {
-       "provider": "virtualbox",
-       "version": "0.0.1"
-      }
+        "provider": "virtualbox",
+        "version": "0.0.1"
+      },
+      "only": [
+        "virtualbox-iso"
+      ],
+      "type": "atlas"
     }
   ],
   "provisioners": [
@@ -85,5 +84,9 @@
       ],
       "type": "shell"
     }
-  ]
+  ],
+  "push": {
+    "name": "analogeryuta/debian-8-i386-minimal"
+  }
 }
+
