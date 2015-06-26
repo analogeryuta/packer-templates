@@ -41,11 +41,8 @@
   ],
   "post-processors": [
     {
-      "output": "ubuntu-1404-server-i386.box",
-      "type": "vagrant"
-    },
-    {
       "type": "vagrant",
+      "output": "ubuntu-1404-server-i386.box",
       "keep_input_artifact": false
     },
     {
@@ -61,7 +58,6 @@
   ],
   "provisioners": [
     {
-      "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
       "scripts": [
         "./postinstall/base.sh",
         "./postinstall/puppet.sh",
