@@ -52,12 +52,13 @@
       "artifact_type": "vagrant.box",
       "metadata": {
        "provider": "virtualbox",
-       "version": "0.0.1"
+       "version": "0.0.2"
       }
     }
   ],
   "provisioners": [
     {
+      "execute_command": "echo 'vagrant' | sudo -S sh '{{ .Path }}'",
       "scripts": [
         "./postinstall/base.sh",
         "./postinstall/puppet.sh",
